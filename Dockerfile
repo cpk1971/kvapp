@@ -1,4 +1,4 @@
-FROM rust:1.61 as build
+FROM rust:1.63 as build
 
 RUN apt-get update && apt-get -y install protobuf-compiler
 
