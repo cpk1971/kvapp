@@ -22,13 +22,10 @@ COPY ./src ./src
 # build for release
 RUN rm ./target/release/deps/kvapp* ./target/release/deps/tester*
 RUN cargo build --release
-RUN cargo install --path .
 
-# our final base
-#FROM rust:1.49
+FROM debian:buster-slim
 
-# copy the build artifact from the build stage
-#COPY --from=build /kvapp/target/release/kvapp .
+COPY --from=build /usr/src/kvapp/target/release/kvapp .
+COPY ./example-cfg-kvapp.json ./cfg-kvapp.json
 
-# set the startup command to run your binary
-CMD ["kvapp"]
+CMD ["./kvapp", "--bind-addr", "0.0.0.0"]
